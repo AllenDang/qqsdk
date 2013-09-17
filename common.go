@@ -48,8 +48,9 @@ func GetOpenId(accessToken string) (string, error) {
   reqUrl := UrlQQOAuth + "/me?access_token=" + accessToken
 
   var err error
+  var resp *http.Response
 
-  if resp, err := http.Get(reqUrl); err == nil && resp.StatusCode == http.StatusOK {
+  if resp, err = http.Get(reqUrl); err == nil && resp.StatusCode == http.StatusOK {
     defer resp.Body.Close()
 
     if respContent, err := ioutil.ReadAll(resp.Body); err == nil {
@@ -59,7 +60,7 @@ func GetOpenId(accessToken string) (string, error) {
     }
   }
 
-  return "", err
+  return "", fmt.Errorf("GetOpenId failed with status code %d", resp.StatusCode)
 }
 
 func GetUserInfo(accessToken, appId, openId string) (*UserInfo, error) {
@@ -72,8 +73,9 @@ func GetUserInfo(accessToken, appId, openId string) (*UserInfo, error) {
   reqUrl := UrlQQ + "/user/get_user_info?" + v.Encode()
 
   var err error
+  var resp *http.Response
 
-  if resp, err := http.Get(reqUrl); err == nil && resp.StatusCode == http.StatusOK {
+  if resp, err = http.Get(reqUrl); err == nil && resp.StatusCode == http.StatusOK {
     defer resp.Body.Close()
 
     var userInfo UserInfo
@@ -86,5 +88,5 @@ func GetUserInfo(accessToken, appId, openId string) (*UserInfo, error) {
     return &userInfo, nil
   }
 
-  return nil, err
+  return nil, fmt.Errorf("GetUserInfo failed with status code %d", resp.StatusCode)
 }
