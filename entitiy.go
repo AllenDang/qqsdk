@@ -16,3 +16,15 @@ type UserInfo struct {
   Level              string //黄钻等级
   Is_yellow_year_vip string //标识是否为年费黄钻用户（0：不是； 1：是）
 }
+
+type ReturnDataForAddT struct {
+  Id   int
+  Time int64
+}
+
+type ReturnForAddT struct {
+  Ret     int
+  Msg     string
+  Errcode int
+  Data    ReturnDataForAddT
+}
