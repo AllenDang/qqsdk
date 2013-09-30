@@ -7,7 +7,7 @@ import (
   "net/url"
 )
 
-func AddT(accessToken, appId, openId, content string) (*ReturnDataForAddT, error) {
+func AddT(accessToken, appId, openId, content string) (*ReturnForAddT, error) {
   v := url.Values{}
   v.Add("access_token", accessToken)
   v.Add("oauth_consumer_key", appId)
@@ -28,7 +28,7 @@ func AddT(accessToken, appId, openId, content string) (*ReturnDataForAddT, error
         reqUrl, ret.Ret, ret.Msg)
     }
 
-    return &ret.Data, nil
+    return &ret, nil
   }
 
   return nil, err
